@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Number Guessing Game</title>
+
+    <style>
+        :root {
+            --dark: black;
+            --white: white;
+            --primary: rgb(0, 116, 193);
+            --secondar: rgb(4, 155, 255);
+        }
+
+        body {
+            /* background-image: linear-gradient(to right, #4a00e0, #6d17e1); */
+            /* background-color: rgb(0, 116, 193); */
+            background-color: var(--primary);
+            margin: 0%;
+            padding: 0%;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .container {
+            margin: 40px 100px;
+            margin-top: 200px;
+            padding: 20px;
+        }
+
+        h1 {
+            border-left: 10px solid white;
+            margin: 40px;
+            padding: 40px;
+            width: 40%;
+            color: var(--dark);
+            font-size: 3.4rem;
+        }
+
+        .right {
+            background-color: var(--white);
+            border-radius: 10px;
+            width: 400px;
+
+            box-shadow: rgba(0, 0, 0, 0.56) 0px 30px 70px 20px;
+
+
+        }
+
+        .para {
+            font-size: 1.5rem;
+            padding: 16px 20px;
+            border-bottom: 1px solid rgb(0, 55, 92);
+            color: var(--dark);
+        }
+
+        .right .form {
+            align-items: center;
+            text-align: center;
+        }
+
+        .guessField {
+            margin: 30px;
+            padding: 10px;
+            height: 20px;
+            width: 30px;
+            outline: none;
+            border: 2px solid var(--dark);
+            align-items: center;
+            text-align: center;
+            font-size: 2rem;
+            border-radius: 7px;
+        }
+
+        .sub {
+            /* background-color: rgb(4, 155, 255); */
+            background-color: var(--secondar);
+            width: 350px;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.3rem;
+            color: var(--white);
+            transition: ease all .4s;
+            height: 50px;
+        }
+
+        .sub:hover {
+            background-color: var(--primary);
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .k {
+            margin: 20px;
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+
+        .warn {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container flex">
+        <h1>Game <br> Can You Guess <br> The Number</h1>
+        <div class="right">
+            <div class="para">
+                Select any number from 0 to 10
+            </div>
+
+            <div class="form">
+                <!-- <form action=""> -->
+                <input type="text" autocomplete="off" id="guessField" placeholder="0" class="guessField">
+                <br><input type="submit" value="Submit" class="sub" id="submitguess">
+                <!-- </form> -->
+                <br>
+                <div class="k">
+                    <span id="a"> Start The Game</span>
+                </div>
+                <div class="warn" id="wrn">Chances Remaining : 5</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var y = Math.floor(Math.random() * 10 + 1);
+        // var y = 10;
+        var guess = 1;
+
+        var win = new Audio("win.mp3");
+        var lose = new Audio("lose.mp3");
+        var chan = new Audio("chances.mp3");
+        document.getElementById("submitguess").onclick = function () {
+            var x = document.getElementById("guessField").value;
+            var total = 6;
+
+            if (total == guess + 1) {
+                document.getElementById("a").innerHTML = "HA HA HA, You lose the game";
+                guess = 1;
+                y = Math.floor(Math.random() * 10 + 1)
+                lose.play();
+
+            }
+
+            else if (x == y) {
+                // alert("CONGRATULATIONS!!! YOU GUESSED IT RIGHT IN " + guess + " GUESS ");
+                document.getElementById("a").innerHTML = `Congractulation!!! <br/> Your have guess the corrent Number <br/> in ${guess} guesses`;
+                guess = 1;
+                win.play();
+                y = Math.floor(Math.random() * 10 + 1)
+            }
+            else if (x > y) {
+                guess++;
+                chan.play();
+                // alert("OOPS SORRY!! TRY A SMALLER NUMBER");
+                //PRANAV SAYKAR
+                document.getElementById("a").innerHTML = "Try Smaller NUMBER";
+            }
+            else {
+                guess++;
+                chan.play();
+                // alert("OOPS SORRY!! TRY A GREATER NUMBER")
+                document.getElementById("a").innerHTML = "Try Greater NUMBER";
+            }
+            document.getElementById("guessField").value = "";
+            // var x=totale-guess
+            document.getElementById("wrn").innerHTML = `Chances Remaining : ${total - guess}`;
+        }
+
+        var input = document.getElementById("guessField");
+        input.addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                document.getElementById("submitguess").click();
+            }
+        });
+
+    </script>
+</body>
+
+</html>
